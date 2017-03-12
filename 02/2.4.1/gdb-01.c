@@ -39,3 +39,4 @@ static int sum(int value){
 	
 	return result;								/*返回结果*/
 }
+
