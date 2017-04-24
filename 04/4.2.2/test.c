@@ -8,6 +8,7 @@ int main(void)
 	
 	/* 分叉进程 */
 	pid = fork();
+	printf("fork done: %d\n", pid);
 	
 	/* 判断是否执行成功 */
 	if(-1 == pid){
