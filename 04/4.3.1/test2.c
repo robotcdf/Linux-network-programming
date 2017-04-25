@@ -31,14 +31,16 @@ int main(void)
 	if( 0 == pid)						/*子进程*/
 	{
 		close(*read_fd);				/*关闭读端*/
-		result = write(*write_fd,string,strlen(string)); 														/*向管道端写入字符*/
+		result = write(*write_fd,string,strlen(string));/*向管道端写入字符*/
+        printf("run 子进程 pid:%d \n",pid);
 		return 0;	
 	}
 	else								/*父进程*/
 	{
 		close(*write_fd);				/*关闭写端*/
-		nbytes = read(*read_fd, readbuffer,sizeof(readbuffer)); 																/*从管道读取数值*/
-		printf("接收到%d个数据，内容为:”%s“\n",nbytes,readbuffer);																/*打印结果*/
+		nbytes = read(*read_fd, readbuffer,sizeof(readbuffer));	/*从管道读取数值*/
+        printf("run 父进程 pid:%d \n",pid);
+		printf("接收到%d个数据，内容为:”%s“\n",nbytes,readbuffer);/*打印结果*/
 	}
 	
 	return 0;

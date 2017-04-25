@@ -24,6 +24,7 @@ int main(void)
 	}
 	
 	pid = fork();						/*分叉程序*/
+    printf("pid:%d \n",pid);
 	if( -1 == pid)						/*fork失败*/
 	{
 		printf("fork 进程失败\n");		/*打印信息*/
