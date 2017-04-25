@@ -1,3 +1,4 @@
+/*若执行失败，请添加sudo 以root权限*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,7 +43,7 @@ int main(void)
 	struct msgmbuf msg_mbuf;
 	
 	int msg_sflags,msg_rflags;
-	char *msgpath = "/ipc/msg/";				/*消息key产生所用的路径*/
+	char *msgpath = "/tmp/msg/";				/*消息key产生所用的路径*/
 	key = ftok(msgpath,'b');					/*产生key*/
 	if(key != -1)								/*产生key成功*/
 	{
