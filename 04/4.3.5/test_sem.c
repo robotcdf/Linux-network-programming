@@ -13,7 +13,7 @@ sem_t CreateSem(key_t key, int value)	/*建立信号量，魔数key和信号量�
 	sem_t semid;						/*信号量ID*/
 	sem.val = value;					/*设置初始值*/
 	
-	semid = semget(key,0,IPC_CREAT|0666);	/*获得信号量的ID*/
+	semid = semget(key,1,IPC_CREAT|0666);/*原demo num_sems为0，改为1后才通过*//*获得信号量的ID*/
 	if (-1 == semid)						/*获得信号量ID失败*/
 	{
 		printf("create semaphore error\n");/*打印信息*/
@@ -63,12 +63,18 @@ int main(void)
 	char i;
 	int value = 0;
 	
-	key = ftok("/ipc/sem",'a');					/*建立信号量的键值*/
-	
+	key = ftok("/tmp/sem",'b');					/*建立信号量的键值*/
+    //printf("key:%c \n",key);
+
 	semid = CreateSem(key,100);					/*建立信号量*/
+    //printf("semid:%d \n",semid);
+
 	for (i = 0;i <= 3;i++){						/*对信号量进行3次增减操作*/
 		Sem_P(semid);							/*增加信号量*/
+       // printf("P:%d \n",GetvalueSem(semid));
+
 		Sem_V(semid);							/*减小信号量*/
+       // printf("V:%d \n",GetvalueSem(semid));
 	}
 	value = GetvalueSem(semid);					/*获得信号量的值*/
 	printf("信号量值为:%d\n",value);				/*打印结果*/
