@@ -1,6 +1,7 @@
 /*
 * sem.c
 * 线程实例
+* gcc -o sem sem.c -lpthread
 */
 #include <stdio.h>
 #include <pthread.h>
@@ -19,7 +20,7 @@ int main (void)
 	
 	pthread_create(&producter_t, NULL,(void*)producter_f, NULL ); 														/*建立生产者线程*/
 	pthread_create(&consumer_t, NULL, (void *)consumer_f, NULL); 														/*建立消费者线程*/
-	sleep(1);									/*等待*/
+    sleep(1);									/*等待*/
 	running =0;									/*设置线程退出*/
 	pthread_join(consumer_t,NULL);				/*等待消费者线程退出*/
 	pthread_join(producter_t,NULL);			/*等待生产者线程退出*/
@@ -35,7 +36,7 @@ void *producter_f (void *arg)					/*生产者处理程序代码*/
 		usleep(1);								/*等待*/
 		sem_post (&sem);						/*信号量增加*/
 		sem_getvalue(&sem,&semval);				/*获得信号量的值*/
-		printf("生产，总数量:%d\n",semval);		/*打印信息*/
+		printf("生产++++，总数量:%d\n",semval);		/*打印信息*/
 	}
 }
 void *consumer_f(void *arg)						/*消费者处理程序代码*/
@@ -46,6 +47,6 @@ void *consumer_f(void *arg)						/*消费者处理程序代码*/
 		usleep(1);								/*等待*/
 		sem_wait(&sem);							/*等待信号量*/
 		sem_getvalue(&sem,&semval);				/*获得信号量的值*/
-		printf("消费，总数量:%d\n",semval);		/*打印信息*/
+		printf("消费--，总数量:%d\n",semval);		/*打印信息*/
 	}
 }

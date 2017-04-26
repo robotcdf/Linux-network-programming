@@ -1,6 +1,8 @@
 /*
 * pthread.c
 * 线程实例
+* 编写linux下的线程需要包含头文件pthread.h，且在生成可执行文件时需要链接库libpthread.a或libpthread.so
+* gcc -o pthread pthread.c -lpthread 
 */
 #include <stdio.h>
 #include <pthread.h>
@@ -29,7 +31,9 @@ int main(void)
 	int i = 0; 
 	int *ret_join = NULL;
 	
-	ret = pthread_create(&pt, NULL, (void*)start_routine, &run);													/*建立线程*/
+    /* pthread_create函数传入参数：
+     * 线程变量(标识符)，线程属性，线程中执行的线程函数，线程函数的参数*/
+	ret = pthread_create(&pt, NULL, (void*)start_routine, &run);/*建立线程*/
 	if(ret != 0)							/*建立线程失败*/
 	{
 		printf("建立线程失败\n");				/*打印信息*/
@@ -42,6 +46,7 @@ int main(void)
 		usleep(1);							/*等待*/
 	}
 	run = 0;								/*设置线程退出控制值，让线程退出*/
+    /*pthread_join函数:pt 线程标识符，线程返回值*/
 	pthread_join(pt,(void*)&ret_join);		/*等待线程退出*/
 	printf("线程返回值为:%d\n",*ret_join);	/*打印线程的退出值*/
 	return 0;

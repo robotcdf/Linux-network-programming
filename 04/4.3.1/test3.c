@@ -33,12 +33,14 @@ int main(void)
 	
 	if( 0 == pid)						/*子进程*/
 	{
+      //printf ("pid==0 \n");
 		int write_size = WRITELEN;		/*写入的长度*/
 		result = 0;						/*结果*/
 		close(*read_fd);				/*关闭读端*/
 		while( write_size >= 0)			/*如果没有将数据写入继续操作*/
 		{
 			result = write(*write_fd,string,write_size); /*写入管道数据*/
+            printf ("子进程.result: %d ",result);
 			if(result >0)				/*写入成功*/
 			{
 				write_size -= result;	/*写入的长度*/
@@ -53,10 +55,12 @@ int main(void)
 	}
 	else								/*父进程*/
 	{
+        //printf("pid !=0 \n");
 		close(*write_fd);				/*关闭写端*/
 		while(1)						/*一直读取数据*/
 		{
-			nbytes = read(*read_fd, readbuffer,sizeof(readbuffer)); 											/*读取数据*/		
+			nbytes = read(*read_fd, readbuffer,sizeof(readbuffer));	/*读取数据*/		
+            printf("父进程.nbytes: %d ",nbytes);
 			if(nbytes <= 0)				/*读取失败*/
 			{
 				printf("没有数据写入了\n");/*打印信息*/
