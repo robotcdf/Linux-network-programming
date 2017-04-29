@@ -5,7 +5,9 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <signal.h>
 #define PORT 8888								/*侦听端口地址*/
+
 
 int main(int argc, char *argv[])
 {

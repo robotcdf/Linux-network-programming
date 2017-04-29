@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 	err = bind(ss, (struct sockaddr*)&server_addr, sizeof(server_addr));
 	if(err < 0){/*出错*/
 		printf("bind error\n");
+       // printf("error %d \n",err);
 		return -1;	
 	}
 	

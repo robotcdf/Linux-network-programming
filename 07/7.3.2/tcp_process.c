@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <string.h>
+#include <signal.h>
 /*客户端的处理过程*/
+void sig_pipe(int sign){
+    printf("Catch a SIGPIPE signal\n");
+    /*释放资源*/
+}
+void sig_int(int sign){
+    printf ("Catch a SIGNINT signal\n");
+    /*释放资源*/
+}
+
 void process_conn_client(int s)
 {
 	ssize_t size = 0;
@@ -8,7 +18,11 @@ void process_conn_client(int s)
 	
 	for(;;){									/*循环处理过程*/
 		/*从标准输入中读取数据放到缓冲区buffer中*/
-		size = read(0, buffer, 1024);
+        size = read(0, buffer, 1024);
+        /*截取sigpipe信号*/
+	    signal(SIGPIPE,sig_pipe);	
+        signal(SIGINT,sig_int);
+
 		if(size > 0){							/*读到数据*/
 			write(s, buffer, size);				/*发送给服务器*/
 			size = read(s, buffer, 1024);		/*从服务器读取数据*/
