@@ -43,12 +43,16 @@ int main(int argc, char *argv[])
 	to32 v32_orig, v32_turn1,v32_turn2; 			/*一个to32类型变量*/
 	
 	v16_orig.value = 0xabcd;						/*赋值为0xabcd*/
-	v16_turn1.value = htons(v16_orig.value);		/*第一次转换*/
-	v16_turn2.value = ntohs(v16_turn1.value);		/*第二次转换*/
+	//v16_turn1.value = htons(v16_orig.value);		/*htons第一次转换*/
+	//v16_turn2.value = ntohs(v16_turn1.value);		/*htons第二次转换*/
+	v16_turn1.value = ntohs(v16_orig.value);		/*ntohs第一次转换*/
+	v16_turn2.value = ntohs(v16_turn1.value);		/*ntohs第二次转换*/
 	
 	v32_orig.value = 0x12345678;				/*赋值为0x12345678*/
-	v32_turn1.value = htonl(v32_orig.value);	/*第一次转换*/
-	v32_turn2.value = ntohl(v32_turn1.value);	/*第二次转换*/
+	//v32_turn1.value = htonl(v32_orig.value);	/*htonl第一次转换*/
+	//v32_turn2.value = htonl(v32_turn1.value);	/*htonl第二次转换*/
+	v32_turn1.value = ntohl(v32_orig.value);	/*ntohl第一次转换*/
+	v32_turn2.value = ntohl(v32_turn1.value);	/*ntohl第二次转换*/
 	
 	/*打印结果*/
 	printf("16 host to network byte order change:\n");
