@@ -15,14 +15,14 @@ int main(int argc, char *argv[])
 
 	/*测试函数inet_aton*/	
 	err = inet_aton(addr1, &ip);
-	if(err){
+	if(err){                /*inet-aton 转换成功时返回非0 传入地址非法返回0*/
 		printf("inet_aton:string %s value is:0x%x\n",addr1, ip.s_addr);
 	}else{
 		printf("inet_aton:string %s  error\n",addr1);
 	}
 	/*inet_addr，先测试192.168.1.1，再测试255.255.255.255*/	
 	ip.s_addr = inet_addr(addr1);
-	if(err != -1){
+	if(err != -1){              /*输入参数非法，返回-1，否则返回为转换后的地址*/
 		printf("inet_addr:string %s value is:0x%x\n",addr1, ip.s_addr);
 
 	}else{
@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
 	 */
 	ip.s_addr = 192<<24|168<<16|1<<8|1;
 	str = inet_ntoa(ip);
+    printf("inet_ntoa:first str %s \n",str);
 	ip.s_addr = 255<<24|255<<16|255<<8|255;
 	str2 = inet_ntoa(ip);	
 	printf("inet_ntoa:ip:0x%x string1 %s,pre is:%s \n",ip.s_addr,str2, str);
@@ -52,16 +53,17 @@ int main(int argc, char *argv[])
 	};
 	str = inet_ntoa(ip);	
 	printf("inet_ntoa:string %s ip:0x%x \n",str,ip.s_addr);
-	/* 测试函数inet_lnaof，获得本机地址 */	
+	/* 测试函数inet_lnaof，获得本机地址主机部分 */	
 	inet_aton(addr1, &ip);
 	local.s_addr = htonl(ip.s_addr);
 	local.s_addr = inet_lnaof(ip);
 	str = inet_ntoa(local);	
 	printf("inet_lnaof:string %s ip:0x%x \n",str,local.s_addr);
-		/* 测试函数inet_netof，获得本机地址 */
+		/* 测试函数inet_netof，获得本机地址网络部分 */
 	network.s_addr = inet_netof(ip);
-	printf("inet_netof:value:0x%x \n",network.s_addr);	
-	
+	str = inet_ntoa(network);
+	printf("inet_netof:string %s ip value:0x%x \n",str,network.s_addr);	
+
 	return 0;
 }
 
