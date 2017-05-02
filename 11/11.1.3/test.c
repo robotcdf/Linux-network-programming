@@ -23,7 +23,7 @@ int main(int argc,char*argv[])
 	int sock_UNIX;							/*socket*/
 	struct sockaddr_un addr_UNIX;			/*AF_UNIX族地址*/
 	int len_UNIX;							/*AF_UNIX族地址长度*/
-	const char path[] = "/demon/path";		/*路径名*/
+	const char path[] = "/demon/path";/*路径名*/
 
 	/*
 	*建立套接字
@@ -47,6 +47,9 @@ int main(int argc,char*argv[])
 	addr_UNIX.sun_family = AF_LOCAL;
 	strcpy(addr_UNIX.sun_path,path);
 	len_UNIX = sizeof(struct sockaddr_un);
+    //len_UNIX = SUN_LEN(sockaddr_un);
+    addr_UNIX.sun_path[0] = 0;         
+    /*将路径名的第一个字符设置为空字符，即"\0"，格式化抽象本地地址*/
 
 	/*
 	*绑定地址到socket sock_UNIX

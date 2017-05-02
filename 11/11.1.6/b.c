@@ -62,6 +62,7 @@ int my_open(const char*pathname, int mode)
 	int fd, sockfd[2],status;
 	pid_t childpid;
 	char c, argsockfd[10],argmode[10];
+    int err;
 	
 	socketpair(AF_LOCAL,SOCK_STREAM,0,sockfd);	/*建立socket*/
 	if((childpid = fork())==0){					/*子进程*/
@@ -69,8 +70,13 @@ int my_open(const char*pathname, int mode)
 		snprintf(argsockfd, sizeof(argsockfd),"%d",sockfd[1]);															/*socket描述符*/
 		snprintf(argmode, sizeof(argmode),"%d",mode);
 														/*打开文件的方式*/
-		execl("./openfile","openfile",argsockfd, pathname,argmode,(char*)NULL)					;/*执行进程A*/
-		printf("execl error\n");
+		//err = execl("./openfile","openfile",argsockfd, pathname,argmode,(char*)NULL)					;/*执行进程A*/
+		err = execl("./a","f",argsockfd, pathname,argmode,(char*)NULL)					;/*执行进程A*/
+        if(err == -1)
+        {
+		    printf("execl error\n");
+            perror("execl()");
+        }
 	}	
 	/*父进程*/
 	close(sockfd[1]);
@@ -103,9 +109,11 @@ int main(int argc, char*argv[])
 	if((fd = my_open(argv[1], O_RDONLY))<0)
 								/*获得进程A打开的文件描述符*/
 		printf("can't open %s\n",argv[1]);
-	
+
 	while((n = read(fd, buff, BUFFSIZE))>0)	/*读取数据*/
 	write(1,buff,n);							/*写入标准输出*/
-	
+
+    //printf("read:%dbytes %s \n",n,buff);
+
 	return(0);	
 }
