@@ -8,18 +8,23 @@
 #include <signal.h>
 #define PORT 8888								/*侦听端口地址*/
 
+extern void sig_int(int sign);
+extern void sig_pipe(int sign);
 
 int main(int argc, char *argv[])
 {
 	int s;										/*s为socket描述符*/
 	struct sockaddr_in server_addr;			/*服务器地址结构*/
 	
+
 	s = socket(AF_INET, SOCK_STREAM, 0); 		/*建立一个流式套接字 */
 	if(s < 0){									/*出错*/
 		printf("socket error\n");
 		return -1;
 	}	
 	
+	signal(SIGINT, sig_int);
+	signal(SIGPIPE,sig_pipe);	
 	/*设置服务器地址*/
 	bzero(&server_addr, sizeof(server_addr));	/*清零*/
 	server_addr.sin_family = AF_INET;					/*协议族*/
