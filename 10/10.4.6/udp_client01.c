@@ -5,26 +5,23 @@
 #include <netinet/in.h>						/*包含struct sockaddr_in*/
 #include <string.h>							/*包含memset()*/
 #define PORT_SERV 8888						/*服务器端口*/
-#define NUM_DATA 100                        /*接收缓冲区数量*/
-#define LENGTH 1024							/*缓冲区大小*/
-static char buff_send[LENGTH];              /*接收缓冲区*/
+#define BUFF_LEN 256							/*缓冲区大小*/
 static void udpclie_echo(int s, struct sockaddr*to)
 {
-	char buff_init[BUFF_LEN] = "UDP TEST";		/*发送给服务器的测试数据*/
+	char buff[BUFF_LEN] = "UDP TEST";			/*发送给服务器的测试数据05	*/
 	struct sockaddr_in from;					/*服务器地址*/
 	socklen_t len = sizeof(*to);						/*地址长度*/
-    int i = 0;                                  /*计数*/
-    for(i=0; i< NUM_DATA; i++)
-    {
-        *((int*) &buff_send[0]) = htonl(i);     /*将输据标记打包*/
-        memcpy(&buff_send[4], buff_init, sizeof(buff_init));   
-                                                /*将数据复制到发送缓冲区*/
-        snedto(s, &bufff_send[0], NUM_DATA, 0, to, len); /*发送数据*/
-	    //sendto(s, buff, BUFF_LEN, 0, to, len);		/*发送给服务器*/
-    }
-	//recvfrom(s, buff, BUFF_LEN, 0, (struct sockaddr*)&from, &len);	
+	sendto(s, buff, BUFF_LEN, 0, to, len);		/*发送给服务器*/
+	int i = 0;
+	for(i = 0; i < 16; i++)
+	{
+		memset(buff, 0, BUFF_LEN);
+		int err = recvfrom(s, buff, 1, 0, (struct sockaddr*) &from, &len);
 												/*从服务器接收数据*/
-	//printf("recved:%s\n",buff);					/*打印数据*/
+		printf("%dst:%c,err:%d\n", i, buff[0], err);	/*打印数据*/
+		printf("recved:%s\n",buff);					/*打印信息*/
+	}
+	printf("recved:%s\n",buff);					/*打印信息*/
 }
 
 int main(int argc, char*argv[])

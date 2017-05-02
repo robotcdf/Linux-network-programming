@@ -23,7 +23,7 @@ int main(int argc, char*argv[])
 		
 	connect(s, (struct sockaddr*)&addr_serv, sizeof(addr_serv));
 														/*连接服务器*/	
-	getsockname(s, (struct sockaddr*)&local, &len);			/*获得套接字文件描述符的地址*/	
+	getsockname(s, (struct sockaddr*)&local, &len);/*获得套接字文件描述符的地址*/	
 	printf("UDP local addr:%s\n",inet_ntoa(local.sin_addr));
 														/*打印获得的地址*/
 	

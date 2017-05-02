@@ -2,24 +2,19 @@
 #include <sys/socket.h>						/*包含socket()/bind()*/
 #include <netinet/in.h>						/*包含struct sockaddr_in*/
 #include <string.h>							/*包含memset()*/
-#define PORT_SERV 8888						/*服务器端口*/
-#define NUM_DATA 100						/*接收缓冲区数量*/
-#define LENGTH 1024									/*缓冲区大小*/
-static char buff[NUM_DATA][LENGTH];
+#define PORT_SERV 8888/*服务器端口*/
+#define BUFF_LEN 256									/*缓冲区大小*/
 void static udpserv_echo(int s, struct sockaddr*client)
 {
 	int n;												/*接收数据长度*/
-	char tmp_buff[LENGTH];								/*接收发送缓冲区*/
+	char buff[BUFF_LEN];								/*接收发送缓冲区															*/
 	socklen_t len;											/*地址长度*/
 	while(1)											/*循环等待*/
 	{
-		len = sizeof(*client);							/*地址长度*/
-		n = recvfrom(s, tmp_buff, LENGTH, 0, client, &len);
-								/*接收数据放到临时缓冲区中*/
-		sendto(s, buff, n, 0, client, len);/*将接收到的n个字节发送回客户端*/
-
-		/*根据接收到数据的头部标志，选择合适的缓冲区位置复制数据*/
-		memcpy(&buff[ntohl(*( (int*) &buff[i][0] ))][0], tmp_buff+4, n-4);
+		len = sizeof(*client);
+		n = recvfrom(s, buff, BUFF_LEN, 0, client, &len);
+								/*接收数据放到buff中，并获得客户端地址*/
+		sendto(s, buff, n, 0, client, len);/*将接收到的n个字节发送回客户												端*/
 	}	
 }
 
