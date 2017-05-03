@@ -1,8 +1,14 @@
 /*
 *broadcast_server.c - 多播服务程序
 */
-#define MCAST_PORT 8888;
-#define MCAST_ADDR "224.0.0.88"/	/*一个局部连接多播地址，路由器不进行转发*/
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <errno.h>
+#include <string.h>
+#include <stdio.h>
+#define MCAST_PORT 8888
+#define MCAST_ADDR "224.0.0.88"	/*一个局部连接多播地址，路由器不进行转发*/
 #define MCAST_DATA "BROADCAST TEST DATA"			/*多播发送的数据*/
 #define MCAST_INTERVAL 5							/*发送间隔时间*/
 int main(int argc, char*argv[])
