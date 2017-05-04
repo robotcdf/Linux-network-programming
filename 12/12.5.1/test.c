@@ -28,14 +28,14 @@ int main(int argc,char **argv)
 	 */
 	optlen = sizeof(snd_size);
 	err = getsockopt(s, SOL_SOCKET, SO_SNDBUF,&snd_size, &optlen);
-	if(err){
+                    /*getsockopt()执行成功，返回0，执行错误，返回-1*/
+	if(err){                           
 		printf("获取发送缓冲区大小错误\n");
 	}  
 	/*
 	 * 打印原始缓冲区设置情况
 	 */
 	printf(" 发送缓冲区原始大小为: %d 字节\n",snd_size);
-	printf(" 接收缓冲区原始大小为: %d 字节\n",rcv_size);
 	/*
 	 * 获得原始接收缓冲区大小
 	 */
@@ -44,6 +44,7 @@ int main(int argc,char **argv)
 	if(err){
 		printf("获取接收缓冲区大小错误\n");
 	}
+	printf(" 接收缓冲区原始大小为: %d 字节\n",rcv_size);
 	/*
 	 * 设置发送缓冲区大小
 	 */
