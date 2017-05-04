@@ -13,7 +13,7 @@ int main(int argc,char **argv)
 	int so_type = -1;	 						/*Socket类型*/
 	socklen_t len = -1;   						/*选项值长度*/
 	
-	s = socket(AF_INET,SOCK_STREAM,0);			/*建立一个流式套接字*/
+	s = socket(AF_INET,/*SOCK_STREAM*/SOCK_DGRAM ,0);			/*建立一个流式套接字*/
 	if(-1 == s){
 		printf("socket error\n");
 		return -1;
@@ -30,6 +30,12 @@ int main(int argc,char **argv)
 	/*输出结果*/
 	printf("socket fd: %d\n",s);
 	printf(" SO_TYPE : %d\n",so_type);
+
+    if(so_type == SOCK_STREAM)
+        printf("TCP套接字\n");
+    else if(so_type == SOCK_DGRAM)
+        printf("UDP套接字\n");
+
 	close(s);
 	return 0;
 }
