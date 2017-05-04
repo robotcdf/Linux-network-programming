@@ -138,7 +138,8 @@ int main(int argc, char *argv[])
 		sin->sin_family = AF_INET;			/*协议族*/
 		err = ioctl(s, SIOCSIFADDR, &ifr);	/*发送设置本机IP地址请求命令*/
 		if(err){							/*失败*/
-			printf("SIOCSIFADDR error\n");
+			printf("SIOCSIFADDR error and maybe  Permission denied\n");
+            perror("ioctl()");
 		}else{								/*成功，再读取一下进行确认*/
 			printf("check IP --");
 			memset(&ifr, 0, sizeof(ifr));	/*重新清零*/
