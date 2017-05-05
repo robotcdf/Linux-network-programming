@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
 	err = ioctl(s, SIOCGARP, &arpreq);
 	if(err < 0){								/*失败*/
 		printf("IOCTL 错误\n");
+        perror("ioctl()");
 		return -1;
 	}else{/*成功*/
 		hw = (unsigned char*)&arpreq.arp_ha.sa_data;	/*硬件地址*/
