@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CUR_DIR=$(pwd)
-cd /home/robot/idao/Linux-network-programming
+cd ~/idao/Linux-network-programming
 
 git pull origin master
 git add $(git ls-files -o)
