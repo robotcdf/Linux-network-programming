@@ -180,6 +180,7 @@ static void icmp_pack(struct icmp *icmph, int seq, struct timeval *tv, int lengt
 		icmph->icmp_data[i] = i;
 									/*计算校验和*/
 	icmph->icmp_cksum = icmp_cksum((unsigned char*)icmph, length);
+	//printf("----debug----icmp_cksum:%d\n", icmph->icmp_cksum);
 }
 
 /*解压接收到的包，并打印信息*/
