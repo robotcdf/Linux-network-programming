@@ -16,6 +16,7 @@
 /*可连接客户端的文件描述符数组*/
 int connect_host[CLIENTNUM];
 int connect_number =  0;
+/*客户端请求处理函数，IO复用的核心代码*/
 static void *handle_request(void *argv)
 {	
 	time_t now;									/*时间*/
@@ -89,6 +90,7 @@ static void *handle_request(void *argv)
 	
 	return NULL;
 }
+/*客户端连接处理函数*/
 static void *handle_connect(void *argv)
 {	
 	int s_s = *((int*)argv) ;			/*获得服务器侦听套接字文件描述符*/
