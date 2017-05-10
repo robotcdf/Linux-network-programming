@@ -1,1 +1,1 @@
-cmd_/home/linux-c/Linux_net/17/17.6.9/built-in.o :=  rm -f /home/linux-c/Linux_net/17/17.6.9/built-in.o; ar rcsD /home/linux-c/Linux_net/17/17.6.9/built-in.o
+cmd_/home/robot/idao/Linux-network-programming/17/17.6.9/built-in.o :=  rm -f /home/robot/idao/Linux-network-programming/17/17.6.9/built-in.o; ar rcsD /home/robot/idao/Linux-network-programming/17/17.6.9/built-in.o

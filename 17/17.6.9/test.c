@@ -1,4 +1,5 @@
 #include <linux/netfilter_ipv4.h>
+#include <linux/netfilter.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/skbuff.h>
@@ -216,17 +217,21 @@ static unsigned int nf_hook_in(unsigned int hooknum,
 static struct nf_hook_ops nfin = 
 {
 	.hook = nf_hook_in,
-	.hooknum = NF_IP_LOCAL_IN,
+	//.hooknum = NF_IP_LOCAL_IN,
+	.hooknum = NF_INET_LOCAL_IN,
 	.pf = PF_INET,
-	.priority = NF_IP_LOCAL_OUT
+	//.priority = NF_IP_LOCAL_OUT
+	.priority = NF_INET_LOCAL_OUT
 };
 /*初始化nfout钩子，在钩子LOCAL_OUT上*/
 static struct nf_hook_ops nfout=
 {
 	.hook = nf_hook_out,
-	.hooknum = NF_IP_LOCAL_OUT,
+	//.hooknum = NF_IP_LOCAL_OUT,
+	.hooknum = NF_INET_LOCAL_OUT,
 	.pf = PF_INET,
-	.priority = NF_IP_PRI_FIRST
+	//.priority = NF_IP_PRI_FIRST
+	.priority = INT_MIN
 };
 /* 初始化nf套接字选项 */
 static struct nf_sockopt_ops nfsockopt = {
