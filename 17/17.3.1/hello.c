@@ -3,9 +3,13 @@
 /*版权声明*/
 MODULE_LICENSE("Dual BSD/GPL");
 /*初始化模块*/
+static char *target = "world";
+module_param(target, charp, S_IRUGO);
+
 static int __init helloworld_init(void)
 {
-	printk(KERN_ALERT "Hello world module init\n");		/*打印信息*/
+	//printk(KERN_ALERT "Hello world module init\n");		/*打印信息*/
+	printk(KERN_ALERT "Hello %s\n", target);	
 	
 	return 0;
 }
