@@ -5,7 +5,7 @@ struct conf_opts conf_para={
 	/*DefaultFile*/	"index.html",
 	/*DocumentRoot*/"/usr/local/var/www/",
 	/*ConfigFile*/	"/etc/sHTTPd.conf",
-	/*ListenPort*/	8080,
+	/*ListenPort*/	8081,
 	/*MaxClient*/	4,	
 	/*TimeOut*/		3,
 	/*InitClient*/		2
@@ -71,6 +71,7 @@ int do_listen()
 	if (err == -1)
 	{
 		printf("bind() error\n");
+        perror("bind()");
 		ret = -2;
 		goto EXITshttpd_listen;
 	}
